@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="x-ua-compatible" content="ie=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Test Auth Server</title>
+		<style>
+		#container {
+		max-width: 500px;
+		}
+		h4 {
+		margin-top: 25px;
+		}
+		</style> 
+	</head>
+	<body>
+		<main id="container">
+		<h1>OAuth2 Test</h1>
+		<h4><b>Step 1:</b> Get the Auth URL</h4>
+		<p>Click the button below to get your auth url.</p>
+		<button id="getCode">Get OAuth URL</button>
+		<p id="result"></p>
+		<a id="authURL" href="#" target="_blank">Click to authorize</a>
+		<h4>Step 2: Get your code and exchange for an access token</h4>
+		<p>
+		After you’re redirected back to your Meet app on GitHub, copy the code
+		from the URI.
+		</p>
+		<br />
+		<label>Code input
+		<input id="code" type="text" value="" />
+		</label>
+		<button id="getToken">Get Token</button>
+		<p id="accessToken"></p>
+		<h4>Step 3: Get the calendar events using your access token</h4>
+		<button id="getEvents">Get Events</button>
+		<p id="events"></p>
+		</main>
+		<script>
+			document.getElementById('getCode').onclick = function() {
+				fetch('https://cx7nza2e8i.execute-api.us-west-2.amazonaws.com/dev/api/get-auth-url')
+				.then((response) => {
+					return response.json();
+				}).then(response => {
+					document.getElementById('result').innerText = response.authUrl;
+					document.getElementById('authURL').href = response.authUrl;
+				})
+			}
+
+			const accessTokenElement = document.getElementById("accessToken");
+
+			document.getElementById('getToken').onclick = function() {
+				let code = document.getElementById('code').value;
+				// If authorization code is not URL-encoded, URL-encode it.
+				if (decodeURIComponent(code) === code) {
+					code = encodeURIComponent(code);
+				}
+				fetch(`https://cx7nza2e8i.execute-api.us-west-2.amazonaws.com/dev/api/token/${code}`)
+				.then((response) => {
+					return response.json();
+				}).then(response => {
+					accessTokenElement.innerText = response.access_token;
+				})
+			}
+
+			document.getElementById('getEvents').onclick = function() {
+				let accessToken = accessTokenElement.innerText;
+				// if authorization code is not URL-encoded, URL-encode it.
+				if (decodeURIComponent(accessToken ) === accessToken ) {
+					accessToken = encodeURIComponent(accessToken );
+				}
+
+				fetch(`https://cx7nza2e8i.execute-api.us-west-2.amazonaws.com/dev/api/get-events/${accessToken}`)
+				.then((response) => {
+					return response.json();
+				}).then(json => {
+					document.getElementById('events').innerHTML = JSON.stringify(json, null, 2);
+				}).catch(err => {
+
+				})
+			}  
+		</script>
+	</body>
+</html>
