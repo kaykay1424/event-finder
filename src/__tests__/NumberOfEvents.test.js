@@ -3,10 +3,10 @@ import { shallow } from 'enzyme';
 import NumberOfEvents from '../NumberOfEvents';
 
 describe('<NumberOfEvents /> component', () => {
-	let locations, NumberOfEventsWrapper;
+	let NumberOfEventsWrapper;
 	
 	beforeAll(() => {
-		NumberOfEventsWrapper = shallow(<NumberOfEvents locations={locations} />);
+		NumberOfEventsWrapper = shallow(<NumberOfEvents />);
 	});
 
 	test('render text input', () => {

@@ -1,38 +1,62 @@
+/********* General *********/
+ul {
+    list-style-type: none;
+}
+* {
+    box-sizing: border-box;
+    max-width: 100%;
+}
+
+/********* -Classes *********/
+.hide {
+    display: none;
+}
+.show {
+    display: block;
+}
+
+/********* Components *********/
+/********* -App *********/
 .App {
-  text-align: center;
+    padding: 1rem;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/********* -CitySearch *********/
+.City-Search,
+.Number-Of-Events {
+    margin: 1rem auto;
+    text-align: center;
+    width: 150px;
+}
+.City-Search input {
+    display: block;
+    margin-top: 0.5rem;
+    width: 100%;
+}
+.suggestions {
+    border: 1px solid;
+    margin-top: 0;
+    padding: 5px;
+    width: 100%;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/********* --NumberOfEvents *********/
+.Number-Of-Events input {
+    display: block;
+    margin: 0.5rem auto auto auto;
+    width: 50px;
+    text-align: center;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+/********* -EventList *********/
+.Event-List {
+    padding-left: 0;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/********* -Event *********/
+.Event {
+    border: 1px solid;
+    margin: 1rem auto;
+    padding: 1rem;
+    width: 800px;
 }

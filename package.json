@@ -7,6 +7,9 @@
     "@testing-library/jest-dom": "5.13.0",
     "@testing-library/react": "11.2.7",
     "@testing-library/user-event": "12.8.3",
+    "axios": "0.21.1",
+    "nprogress": "0.2.0",
+    "prop-types": "15.7.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
@@ -51,8 +54,8 @@
     ]
   },
   "devDependencies": {
-    "@babel/eslint-parser": "7.14.5",
     "@wojtekmaj/enzyme-adapter-react-17": "0.6.1",
+    "babel-eslint": "10.1.0",
     "enzyme": "3.11.0",
     "eslint": "7.28.0",
     "eslint-plugin-react": "7.24.0",
