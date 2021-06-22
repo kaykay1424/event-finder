@@ -8,6 +8,7 @@ import {extractLocations, getEvents} from './api';
 
 class App extends Component {
     state = {
+        currentLocation: 'all',
         events: [],
         locations: []
     }
@@ -18,7 +19,8 @@ class App extends Component {
             if (this.mounted) {
                 this.setState({
                     events, 
-                    locations: extractLocations(events)
+                    locations: extractLocations(events),
+                    maxNumEvents: 20
                 });
             }
         });
@@ -28,13 +30,32 @@ class App extends Component {
         this.mounted = false;
     }
 
-    updateEvents = (location) => {
+    updateEvents = (location, numEvents) => {
+        
+        if (location) 
+            this.setState({
+                currentLocation: location
+            });
+            
+        else if (!location)
+            location = this.state.currentLocation;
+            
+        if (!numEvents) numEvents = 20;
+        
         getEvents()
-            .then(events => {
+            .then(events => { 
+                let updatedEvents;
+                if (location === 'all') 
+                    updatedEvents = events;
+                else 
+                    updatedEvents = events.filter(event => 
+                        event.location === location
+                    );
+                  
                 this.setState({
-                    events: location === 'all' 
-                        ? events 
-                        : events.filter(event => event.location === location)
+                    events: updatedEvents.slice(
+                        0, numEvents),
+                    maxNumEvents: updatedEvents.length    
                 });
             });
     }
@@ -46,7 +67,10 @@ class App extends Component {
             <div className="App">
                 <CitySearch locations={locations} updateEvents={updateEvents} 
                 />
-                <NumberOfEvents />
+                <NumberOfEvents 
+                    maxNumEvents={this.state.maxNumEvents} 
+                    updateEvents={updateEvents} 
+                />
                 <EventList events={events} />
             </div>
         );

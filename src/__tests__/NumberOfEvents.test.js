@@ -6,7 +6,8 @@ describe('<NumberOfEvents /> component', () => {
     let NumberOfEventsWrapper;
     
     beforeAll(() => {
-        NumberOfEventsWrapper = shallow(<NumberOfEvents />);
+        NumberOfEventsWrapper = shallow(<NumberOfEvents 
+            updateEvents={() => {}} />);
     });
 
     test('render text input', () => {
@@ -21,7 +22,7 @@ describe('<NumberOfEvents /> component', () => {
 
     test('change state when text input changes', () => {
         NumberOfEventsWrapper.setState({
-            numEvents: 32
+            numEvents: 20
         });
         
         const changedNum = 10;
@@ -29,5 +30,4 @@ describe('<NumberOfEvents /> component', () => {
         NumberOfEventsWrapper.find('.number').simulate('change', eventObject);
         expect(NumberOfEventsWrapper.state('numEvents')).toBe(changedNum);
     });
-
 });

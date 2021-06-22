@@ -70,8 +70,8 @@ class CitySearch extends Component {
 }
 
 CitySearch.propTypes = {
-    locations: PropTypes.array.required,
-    updateEvents: PropTypes.func.required
+    locations: PropTypes.array.isRequired,
+    updateEvents: PropTypes.func
 };
 
 export default CitySearch;

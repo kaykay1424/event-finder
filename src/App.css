@@ -36,8 +36,16 @@ ul {
 .suggestions {
     border: 1px solid;
     margin-top: 0;
-    padding: 5px;
+    padding: 0;
     width: 100%;
+}
+.suggestions li {
+	padding-bottom: 5px;
+	padding-top: 5px;
+}
+.suggestions li:hover {
+	background-color: turquoise;
+	cursor: pointer;
 }
 
 /********* --NumberOfEvents *********/

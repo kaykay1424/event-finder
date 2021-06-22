@@ -27,7 +27,7 @@ describe('<App /> component', () => {
     });
 });
 
-describe('<App /> integration', () => {
+describe('<App /> integration', () => { 
     test('App passes "events" state as a prop to EventList', () => {
         const AppWrapper = mount(<App />);
         const AppEventsState = AppWrapper.state('events');
@@ -73,6 +73,28 @@ describe('<App /> integration', () => {
                 suggestionItems.length - 1).simulate('click');
             const allEvents = await getEvents();
             expect(AppWrapper.state('events')).toEqual(allEvents);
+            AppWrapper.unmount();
+        });
+    
+    test('get number of events matching number specified by user', async () => {
+        const AppWrapper = mount(<App />);
+        AppWrapper.find(NumberOfEvents).find('.number').simulate('change', {
+            target: {value: 1}
+        });
+
+        let events = await getEvents();
+        events = events.slice(0,1);
+        expect(AppWrapper.state('events')).toEqual(events);
+        AppWrapper.unmount();
+    });
+
+    // eslint-disable-next-line max-len
+    test('set max number of events user can select based on number of events available', 
+        () => {
+            const AppWrapper = mount(<App />);
+            expect(AppWrapper.find(NumberOfEvents).find(
+                '.number').prop('max')).toEqual(
+                AppWrapper.state('maxNumEvents'));
             AppWrapper.unmount();
         });
 });

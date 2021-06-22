@@ -1,14 +1,17 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 class NumberOfEvents extends Component {
     state = {
-        numEvents: 32
+        numEvents: 20
     }
 
     handleInputChange = (value) => {
         this.setState({
             numEvents: value
         });
+
+        this.props.updateEvents(null, value);
     }
 
     render() {
@@ -20,11 +23,17 @@ class NumberOfEvents extends Component {
                     className="number"
                     type="number"
                     value={this.state.numEvents}
+                    max={this.props.maxNumEvents}
                     onChange={(e) => this.handleInputChange(e.target.value)}
                 />
             </div>
         );
     }
 }
+
+NumberOfEvents.propTypes = {
+    maxNumEvents: PropTypes.number,
+    updateEvents: PropTypes.func
+};
 
 export default NumberOfEvents;
