@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/event-finder/static/css/main.a5fd52a2.chunk.css",
-    "main.js": "/event-finder/static/js/main.37314ffe.chunk.js",
-    "main.js.map": "/event-finder/static/js/main.37314ffe.chunk.js.map",
+    "main.css": "/event-finder/static/css/main.15dbd05d.chunk.css",
+    "main.js": "/event-finder/static/js/main.27c7de0e.chunk.js",
+    "main.js.map": "/event-finder/static/js/main.27c7de0e.chunk.js.map",
     "runtime-main.js": "/event-finder/static/js/runtime-main.7f1c018b.js",
     "runtime-main.js.map": "/event-finder/static/js/runtime-main.7f1c018b.js.map",
     "static/js/2.a0151d33.chunk.js": "/event-finder/static/js/2.a0151d33.chunk.js",
@@ -12,13 +12,13 @@
     "index.html": "/event-finder/index.html",
     "service-worker.js": "/event-finder/service-worker.js",
     "service-worker.js.map": "/event-finder/service-worker.js.map",
-    "static/css/main.a5fd52a2.chunk.css.map": "/event-finder/static/css/main.a5fd52a2.chunk.css.map",
+    "static/css/main.15dbd05d.chunk.css.map": "/event-finder/static/css/main.15dbd05d.chunk.css.map",
     "static/js/2.a0151d33.chunk.js.LICENSE.txt": "/event-finder/static/js/2.a0151d33.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.7f1c018b.js",
     "static/js/2.a0151d33.chunk.js",
-    "static/css/main.a5fd52a2.chunk.css",
-    "static/js/main.37314ffe.chunk.js"
+    "static/css/main.15dbd05d.chunk.css",
+    "static/js/main.27c7de0e.chunk.js"
   ]
 }
