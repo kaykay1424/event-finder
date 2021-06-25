@@ -23,7 +23,10 @@ class Event extends Component {
             <h3>{event.summary}</h3>
             <p><b>Date:</b> {new Date(event.start.dateTime).toDateString()}</p>
             <p><b>Time:</b> {eventStartTime} - {eventEndTime}</p>
-            <p><b>Location:</b> {event.location}</p>
+            <p>
+                <b>Location:</b> 
+                <span className="location">{event.location}</span>
+            </p>
             <div 
                 className={`details ${
                     showDetails ? 'show': 'hide'
