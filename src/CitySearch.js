@@ -1,8 +1,11 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
+import {InfoAlert} from './Alert';
+
 class CitySearch extends Component {
     state = {
+        infoText: '',
         query: '',
         showSuggestions: undefined,
         suggestions: []
@@ -12,15 +15,25 @@ class CitySearch extends Component {
         const suggestions = this.props.locations.filter((location) => {
             return location.toUpperCase().indexOf(value.toUpperCase()) > -1;
         });
-        
-        this.setState({
-            query: value,
-            suggestions
-        });
+
+        if (suggestions.length === 0) {
+            this.setState({
+                infoText: 'No matching cities were found. Please try again.',
+                query: value,
+                suggestions
+            });
+        } else {
+            this.setState({
+                infoText: '',
+                query: value,
+                suggestions
+            });
+        }
     }
 
     handleItemClick = (selectedCity) => {
         this.setState({
+            infoText: '',
             query: selectedCity,
             showSuggestions: false
         });
@@ -44,7 +57,7 @@ class CitySearch extends Component {
                     value={query}
                     onChange={(e) => this.handleInputChange(e.target.value)}
                     onFocus={() => this.setState({showSuggestions: true})}
-                />
+                /> 
                 <ul 
                     className={`suggestions ${
                         showSuggestions ? 'show': 'hide'}`}
@@ -63,7 +76,10 @@ class CitySearch extends Component {
                     >
                         <b>See all cities</b>
                     </li>
-                </ul>
+                </ul>                
+                <InfoAlert 
+                    text={this.state.infoText} 
+                />
             </div>
         );
     }
