@@ -14,6 +14,9 @@ ul {
 .show {
     display: block;
 }
+.text-center {
+    text-align: center;
+}
 
 /********* Components *********/
 /********* -App *********/
@@ -21,7 +24,12 @@ ul {
     padding: 1rem;
 }
 
-/********* -CitySearch *********/
+/********* --Alert *********/
+.Alert {
+    text-align: center;
+}
+
+/********* --CitySearch *********/
 .City-Search,
 .Number-Of-Events {
     margin: 1rem auto;
@@ -50,7 +58,7 @@ ul {
     cursor: pointer;
 }
 
-/********* --NumberOfEvents *********/
+/********* ---NumberOfEvents *********/
 .Number-Of-Events input {
     display: block;
     margin: 0.5rem auto auto auto;
@@ -58,12 +66,12 @@ ul {
     text-align: center;
 }
 
-/********* -EventList *********/
+/********* --EventList *********/
 .Event-List {
     padding-left: 0;
 }
 
-/********* -Event *********/
+/********* ---Event *********/
 .Event {
     border: 1px solid;
     margin: 1rem auto;
