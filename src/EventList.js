@@ -11,7 +11,7 @@ class EventList extends Component {
 
     componentDidMount() {
         this.setState({
-            infoText: navigator.online 
+            infoText: navigator.onLine 
                 ? '' : `The list loaded may not be up to date. 
                 Please go online to view the most current list.`
         });

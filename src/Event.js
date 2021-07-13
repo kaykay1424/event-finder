@@ -24,7 +24,7 @@ class Event extends Component {
             <p><b>Date:</b> {new Date(event.start.dateTime).toDateString()}</p>
             <p><b>Time:</b> {eventStartTime} - {eventEndTime}</p>
             <p>
-                <b>Location:</b> 
+                <b>Location: </b> 
                 <span className="location">{event.location}</span>
             </p>
             <div 
