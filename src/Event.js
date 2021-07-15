@@ -34,6 +34,7 @@ class Event extends Component {
                 }
             >
                 <h4>About event:</h4>	
+                <p>{event.description}</p>
                 <p>
                     <a 
                         href={event.htmlLink} 
@@ -41,7 +42,6 @@ class Event extends Component {
                         target="_blank">See details on Google Calendar
                     </a>
                 </p>
-                <p>{event.description}</p>
             </div>
             <button 
                 className="toggle-details"

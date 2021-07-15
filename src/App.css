@@ -23,6 +23,10 @@ ul {
 .App {
     padding: 1rem;
 }
+.data-vis-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+}
 
 /********* --Alert *********/
 .Alert {
