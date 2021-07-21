@@ -6,11 +6,10 @@ function WelcomeScreen({showWelcomeScreen, getAccessToken}) {
     return showWelcomeScreen ?
         (
             <div className="WelcomeScreen">
-                <h1>Welcome to the Meet app</h1>
+                <h1>Welcome to the Event Finder app</h1>
                 <h4>
-                    Log in to see upcoming events around the world for
-                    full-stack
-                    developers
+                    Sign in to see upcoming events around the world for
+					developers.
                 </h4>
                 <div className="button_cont" >
                     <div className="google-btn">

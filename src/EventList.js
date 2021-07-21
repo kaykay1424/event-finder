@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import Event from './Event';
 import PropTypes from 'prop-types';
-
+import './EventList.css';
 import {InfoAlert} from './Alert';
 
 const EventList = ({events}) => {
@@ -18,13 +18,18 @@ const EventList = ({events}) => {
             <InfoAlert 
                 text={infoText} 
             />
-            <ul className="Event-List">
-                {events.map(event =>
-                    <li key={event.id}>
-                        <Event event={event} />
-                    </li>
-                )}
-            </ul>
+            <div className="event-list-container">
+                
+                <ul className="Event-List">
+                    {events.map(event =>
+                        <li key={event.id}>
+                            <Event event={event} />
+                        </li>
+                    )}
+                </ul>
+                
+            </div>
+            
         </>
     );
 };

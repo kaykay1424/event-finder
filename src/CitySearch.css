@@ -1,0 +1,27 @@
+.City-Search,
+.Number-Of-Events {
+    /* margin: 1rem 0; */
+    /* text-align: center; */
+    /* width: 350px; */
+}
+.City-Search input {
+    display: block;
+    margin-top: 0.5rem;
+    width: 150px;
+}
+.suggestions {
+    border: 1px solid;
+    border-top: 0;
+    /* margin: 0 auto; */
+    max-height: 150px;
+    overflow-y: auto;
+    width: 150px;
+}
+.suggestions li {
+    padding: 0.3rem 0.5rem;
+}
+.suggestions li:hover {
+    background-color: var(--secondary-color);
+    color: #fff;
+    cursor: pointer;
+}

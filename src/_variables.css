@@ -1,0 +1,8 @@
+/********* Variables **********/
+:root {
+    --primary-color: #f59333;
+    --secondary-color: #3c92e8;
+    --dark-gray-color: rgb(73, 71, 71);
+    --light-gray-color: rgb(242, 241, 241);
+    --off-white-color: rgb(250, 250, 250);
+}

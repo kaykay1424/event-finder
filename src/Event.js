@@ -1,5 +1,16 @@
 import React, {Component} from 'react';
 import PropTypes, {shape} from 'prop-types';
+import {convertTime} from './api';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import './Event.css';
+import {
+    faCalendarAlt,
+    faChevronDown,
+    faChevronUp,
+    faClock, 
+    faLocationArrow,
+    faNewspaper
+} from '@fortawesome/free-solid-svg-icons';
 
 class Event extends Component {
     state = {
@@ -21,11 +32,16 @@ class Event extends Component {
             eventEndMinutes === 0 ? '00': eventEndMinutes}`;
         return <div className="Event">
             <h3>{event.summary}</h3>
-            <p><b>Date:</b> {new Date(event.start.dateTime).toDateString()}</p>
-            <p><b>Time:</b> {eventStartTime} - {eventEndTime}</p>
+            <p> 
+                <FontAwesomeIcon icon={faClock} /> 
+                {new Date(event.start.dateTime)
+                    .toDateString()} | {
+                    convertTime(eventStartTime)} - {convertTime(eventEndTime)}
+                
+            </p>
             <p>
-                <b>Location: </b> 
-                <span className="location">{event.location}</span>
+                
+                <FontAwesomeIcon icon={faLocationArrow} /> {event.location}
             </p>
             <div 
                 className={`details ${
@@ -33,20 +49,33 @@ class Event extends Component {
                 }`
                 }
             >
-                <h4>About event:</h4>	
-                <p>{event.description}</p>
-                <p>
-                    <a 
-                        href={event.htmlLink} 
-                        rel="noreferrer"
-                        target="_blank">See details on Google Calendar
-                    </a>
-                </p>
+                <div>
+                    <FontAwesomeIcon icon={faNewspaper} />
+                    <p>
+                        
+                        {event.description}
+                    </p> 	
+                </div>
+                
+                <div>
+                    <FontAwesomeIcon icon={faCalendarAlt} />
+                    <p>
+                        <a 
+                            href={event.htmlLink} 
+                            rel="noreferrer"
+                            target="_blank">See details on Google Calendar
+                        </a>
+                    </p>
+                    
+                    
+                </div>
             </div>
             <button 
                 className="toggle-details"
                 onClick={() => this.setState({showDetails: !showDetails})}
-            >Details</button>
+            >Details {this.state.showDetails 
+                    ? <FontAwesomeIcon icon={faChevronUp} />
+                    : <FontAwesomeIcon icon={faChevronDown} />}</button>
         </div>;
     }
 }

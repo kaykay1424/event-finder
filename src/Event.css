@@ -1,0 +1,42 @@
+.Event [data-prefix="fas"] {
+    color: var(--dark-gray-color);
+    margin-right: 1rem;
+}
+.details div p {
+    margin-top: 0;
+}
+.details.show div {
+    display: flex;
+}
+.Event {
+    /* background-color: var(--light-gray-color); */
+    border: 1px solid rgb(221, 218, 218);
+    border-radius: 5px;
+    /* box-shadow: 2px 2px 8px; */
+    margin: 1rem 0;
+    padding: 1rem;
+    /* position: relative; */
+    /* width: 350px; */
+}
+.Event h3 {
+    border-bottom: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    font-weight: bold;
+    padding-bottom: 1rem;
+}
+.toggle-details {
+    background-color: var(--secondary-color);
+    border: 5px solid var(--secondary-color);
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+}
+.toggle-details:hover {
+    background-color: #003c77;
+    border-color: #003c77;
+    /* border: 5px solid #3c92e8a1; */
+}
+.toggle-details [class*="chevron"] {
+    color: #fff;
+    margin: 0;
+}

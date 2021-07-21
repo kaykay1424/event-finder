@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-
+import './NumberOfEvents.css';
 import {ErrorAlert} from './Alert';
 
 class NumberOfEvents extends Component {
@@ -30,7 +30,9 @@ class NumberOfEvents extends Component {
     render() {
         return (
             <div className="Number-Of-Events">
-                <label htmlFor="number">Select number of events</label>
+                <label 
+                    className="label" 
+                    htmlFor="number">Select number of events</label>
                 <input 
                     id="number"
                     className="number"

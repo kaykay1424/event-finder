@@ -4,7 +4,10 @@
     height: 100%;
     text-align: center;
     top: 0;
-    background: white;
+    background: rgb(250, 249, 249);
+}
+.WelcomeScreen h1 {
+    color: var(--primary-color);
 }
 .login-button {
     color: #494949;
@@ -27,14 +30,17 @@
     height: 42px;
     margin: 1rem;
     background-color: #4285f4;
+    background-color: var(--secondary-color);
     border-radius: 2px;
     box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.25);
 }
 .google-btn:hover {
     box-shadow: 0 0 6px #4285f4;
+    box-shadow: 0 0 6px var(--secondary-color);
 }
 .google-btn:active {
     background: #1669f2;
+    background: var(--secondary-color);
 }
 .google-icon-wrapper {
     position: absolute;
@@ -59,6 +65,7 @@
     letter-spacing: 0.2px;
     font-family: "Roboto";
     background-color: #4285f4;
+    background-color: var(--secondary-color);
     width: 80%;
     height: 100%;
     text-align: center;

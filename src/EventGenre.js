@@ -14,14 +14,14 @@ import PropTypes from 'prop-types';
 
 const EventGenre = ({events}) => {
     useEffect(() => {
-        setData(getData());
+        setData(getGenresData());
     }, [events]);
 
     const [data, setData] = useState([]);
 
     const colors = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
     
-    const getData = () => {
+    const getGenresData = () => {
         let data = [
             {name: 'jQuery', value: 0},
             {name: 'JavaScript', value: 0},
@@ -55,30 +55,33 @@ const EventGenre = ({events}) => {
 
     
     return (
-        <ResponsiveContainer width="45%" height={400}>
-            <PieChart height={400}>
-                <Legend verticalAlign="top" height={30} />
-                <Pie
-                    data={data}
-                    cx={200}
-                    cy={200}
-                    labelLine={false}
-                    label={({percent}) => {
-                        return `${(percent * 100).toFixed(0)}%`;}}
-                    outerRadius={120}
-                    fill="#8884d8"
-                    dataKey="value"
-                >
-                    <LabelList 
-                        dataKey="name" 
-                        position="inside"
-                    />
-                    {data.map((entry, index) => (
-                        <Cell key={index} fill={colors[index]} />
-                    ))}
-                </Pie>
-            </PieChart>
-        </ResponsiveContainer>
+        <div className="chart-container">
+            <h3 className="text-center">Events by genre</h3>
+            <ResponsiveContainer width="100%" height={400}>
+                <PieChart height={400}>
+                    <Legend verticalAlign="top" height={30} />
+                    <Pie
+                        data={data}
+                        cx={200}
+                        cy={200}
+                        labelLine={false}
+                        label={({percent}) => {
+                            return `${(percent * 100).toFixed(0)}%`;}}
+                        outerRadius={120}
+                        fill="#8884d8"
+                        dataKey="value"
+                    >
+                        <LabelList 
+                            dataKey="name" 
+                            position="inside"
+                        />
+                        {data.map((entry, index) => (
+                            <Cell key={index} fill={colors[index]} />
+                        ))}
+                    </Pie>
+                </PieChart>
+            </ResponsiveContainer>
+        </div>
     );
 };
 

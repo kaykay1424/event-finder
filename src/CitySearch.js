@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-
+import './CitySearch.css';
 import {InfoAlert} from './Alert';
 
 class CitySearch extends Component {
@@ -34,7 +34,7 @@ class CitySearch extends Component {
     handleItemClick = (selectedCity) => {
         this.setState({
             infoText: '',
-            query: selectedCity,
+            query: selectedCity === 'all' ? 'All cities': selectedCity,
             showSuggestions: false
         });
 
@@ -49,7 +49,9 @@ class CitySearch extends Component {
         } = this.state;
         return (
             <div className="City-Search">
-                <label htmlFor="city">Choose your city</label>
+                <label className="label" htmlFor="city">
+					Search for a city
+                </label>
                 <input 
                     id="city"
                     className="city"
