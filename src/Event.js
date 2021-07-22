@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import PropTypes, {shape} from 'prop-types';
 import {convertTime} from './api';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import './Event.css';
 import {
     faCalendarAlt,
     faChevronDown,
@@ -11,6 +10,7 @@ import {
     faLocationArrow,
     faNewspaper
 } from '@fortawesome/free-solid-svg-icons';
+import './Event.css';
 
 class Event extends Component {
     state = {
@@ -23,11 +23,13 @@ class Event extends Component {
         const eventStartDate = new Date(event.start.dateTime);
         const eventStartHours = eventStartDate.getHours();
         const eventStartMinutes = eventStartDate.getMinutes();
+        // eslint-disable-next-line no-unused-vars
         const eventStartTime = `${eventStartHours}:${
             eventStartMinutes === 0 ? '00' : eventStartMinutes}`;
         const eventEndDate = new Date(event.end.dateTime);
         const eventEndHours = eventEndDate.getHours();
         const eventEndMinutes = eventEndDate.getMinutes();
+        // eslint-disable-next-line no-unused-vars
         const eventEndTime = `${eventEndHours}:${
             eventEndMinutes === 0 ? '00': eventEndMinutes}`;
         return <div className="Event">

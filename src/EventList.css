@@ -5,8 +5,14 @@
 }
 .event-list-container {
     /* display: flex; */
-    height: 100vh;
+    /* height: 100vh; */
     overflow-y: auto;
     padding-left: 0;
     width: 45%;
+}
+
+@media screen and (max-width: 1200px) {
+    .event-list-container {
+        width: 100%;
+    }
 }

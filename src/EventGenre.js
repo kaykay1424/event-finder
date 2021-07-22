@@ -19,8 +19,8 @@ const EventGenre = ({events}) => {
 
     const [data, setData] = useState([]);
 
-    const colors = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
-    
+    const colors = ['#6A8CFA', '#68B54C', '#FA3824', '#ED892B', '#8B69FA'];
+
     const getGenresData = () => {
         let data = [
             {name: 'jQuery', value: 0},

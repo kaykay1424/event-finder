@@ -53,7 +53,8 @@ class App extends Component {
             if (this.mounted) {
                 this.setState({
                     events, 
-                    locations: extractLocations(events)
+                    locations: extractLocations(events),
+                    maxNumEvents: events.length 
                 });
             }
         });
@@ -66,11 +67,14 @@ class App extends Component {
     }
 
     filterAllCitiesEvents = (city) => {
+        const filteredEvents = this.state.events.filter((event) => {
+            return event.location.match(city);
+        });
+
         this.setState({
             filteredCity: city,
-            filteredEvents: this.state.events.filter((event) => {
-                return event.location.match(city);
-            })
+            filteredEvents,
+            maxNumEvents: filteredEvents.length 
         });
     }
 
@@ -103,19 +107,17 @@ class App extends Component {
         
         if (location) 
             this.setState({
-                currentLocation: location
-            });
-            
-        else if (!location)
-            location = this.state.currentLocation;
-            
-        if (!numEvents) {
-            this.setState({
+                currentLocation: location,
                 filteredCity: '',
                 filteredEvents: []
             });
-            numEvents = 20;
-        }
+            
+        else if (!location)
+            location = this.state.filteredCity !== ''
+                ? this.state.filteredCity
+                : this.state.currentLocation;
+            
+        if (!numEvents) numEvents = 20;
         
         getEvents()
             .then(events => { 

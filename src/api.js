@@ -2,11 +2,19 @@ import {mockData} from './mock-data';
 import axios from 'axios';
 import NProgress from 'nprogress';
 
-export const convertTime = (hours) => {
-    const numHours = parseInt(hours);
+export const convertTime = (time) => {
+    const timeArray = time.split(':');
+    const numHours = timeArray[0];
+    const numMinutes = timeArray[1];
 
-    if (numHours < 12) return hours + 'am';
-    if (numHours >= 12) return hours + 'pm';
+    if (numHours < 12) {
+        return time + 'am';
+    } 
+    if (numHours >= 12) {
+        return (numHours - 12 === 0 
+            ? 12 
+            : numHours - 12) + ':' + numMinutes + 'pm';
+    }
 };
 
 export const extractLocations = (events) => {

@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import './NumberOfEvents.css';
-import {ErrorAlert} from './Alert';
 
 class NumberOfEvents extends Component {
     state = {
@@ -37,11 +36,14 @@ class NumberOfEvents extends Component {
                     id="number"
                     className="number"
                     type="number"
-                    value={this.state.numEvents}
+                    value={this.props.maxNumEvents < this.state.numEvents 
+                        ? this.props.maxNumEvents
+                        : this.state.numEvents 
+                    }
                     max={this.props.maxNumEvents}
+                    min="1"
                     onChange={(e) => this.handleInputChange(e.target.value)}
                 />
-                <ErrorAlert text={this.state.infoText} />
             </div>
         );
     }
