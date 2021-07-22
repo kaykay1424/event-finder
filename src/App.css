@@ -70,26 +70,6 @@ ul {
 
 /********* Components *********/
 /********* -App *********/
-.all-cities-list {
-    max-height: 150px;
-    overflow-y: auto;
-}
-.all-cities-list li {
-    border-bottom: 1px solid transparent;
-    cursor: pointer;
-    margin: 0;
-    padding: 0.5rem;
-}
-.all-cities-list li:first-child {
-    /* border-bottom: 0; */
-}
-.all-cities-list li:not(.selected):hover {
-    border-bottom: 1px solid var(--secondary-color);
-    /* color: #fff; */
-}
-.all-cities-list li:first-child:not(.selected):hover {
-    /* border-bottom: 0; */
-}
 .App {
     /* display: grid;
     grid-template-columns: 1fr 3fr 3fr;
@@ -201,6 +181,7 @@ ul {
         height: auto;
     }
     .data-vis-wrapper {
+        order: -1;
         width: 100%;
     }
 }

@@ -8,13 +8,14 @@ export const convertTime = (time) => {
     const numMinutes = timeArray[1];
 
     if (numHours < 12) {
+        if (numHours === 0) return '12:' + numMinutes + 'am';
         return time + 'am';
     } 
-    if (numHours >= 12) {
-        return (numHours - 12 === 0 
-            ? 12 
-            : numHours - 12) + ':' + numMinutes + 'pm';
-    }
+    
+    return (numHours - 12 === 0 
+        ? 12 
+        : numHours - 12) + ':' + numMinutes + 'pm';
+    
 };
 
 export const extractLocations = (events) => {

@@ -5,16 +5,16 @@ import CitySearch from './CitySearch';
 import EventList from './EventList';
 import NumberOfEvents from './NumberOfEvents';
 import EventGenre from './EventGenre';
-import WelcomeScreen from './WelcomeScreen';
+// import WelcomeScreen from './WelcomeScreen';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {
     faSearch
 } from '@fortawesome/free-solid-svg-icons';
 
 import {
-    checkToken, 
+    // checkToken, 
     extractLocations, 
-    getAccessToken, 
+    // getAccessToken, 
     getEvents
 } from './api';
 
@@ -31,6 +31,7 @@ import {
 class App extends Component {
     state = {
         currentLocation: 'all',
+        currentNumEvents: 20,
         events: [],
         filteredCity: '',
         filteredEvents: [],
@@ -42,39 +43,27 @@ class App extends Component {
 
     async componentDidMount() {
         this.mounted = true;
-        const accessToken = localStorage.getItem('access_token');
-        const isTokenValid = (await checkToken(accessToken)).error 
-            ? false : true;
-        const searchParams = new URLSearchParams(window.location.search);
-        const code = searchParams.get('code');
-        this.setState({showWelcomeScreen: !(code || isTokenValid)});
-        if ((code || isTokenValid) && this.mounted) {
-            getEvents().then((events) => {
-                if (this.mounted) {
-                    this.setState({
-                        events, 
-                        locations: extractLocations(events),
-                        maxNumEvents: events.length 
-                    });
-                }
-            });
-        }       
+        // const accessToken = localStorage.getItem('access_token');
+        // const isTokenValid = (await checkToken(accessToken)).error 
+        //     ? false : true;
+        // const searchParams = new URLSearchParams(window.location.search);
+        // const code = searchParams.get('code');
+        // this.setState({showWelcomeScreen: !(code || isTokenValid)});
+        // if ((code || isTokenValid) && this.mounted) {
+        getEvents().then((events) => {
+            if (this.mounted) {
+                this.setState({
+                    events, 
+                    locations: extractLocations(events),
+                    maxNumEvents: events.length 
+                });
+            }
+        });
+        // }       
     }
 
     componentWillUnmount() {
         this.mounted = false;
-    }
-
-    filterAllCitiesEvents = (city) => {
-        const filteredEvents = this.state.events.filter((event) => {
-            return event.location.match(city);
-        });
-
-        this.setState({
-            filteredCity: city,
-            filteredEvents,
-            maxNumEvents: filteredEvents.length 
-        });
     }
 
     getCitiesData = () => {      
@@ -102,57 +91,53 @@ class App extends Component {
         return data;
     }
 
-    updateEvents = (location, numEvents) => {
-        
-        if (location) 
+    updateEvents = async (location, numEvents) => { 
+        let events;
+        if (location) {
             this.setState({
                 currentLocation: location,
                 filteredCity: '',
                 filteredEvents: []
             });
-            
-        else if (!location)
-            location = this.state.filteredCity !== ''
-                ? this.state.filteredCity
-                : this.state.currentLocation;
-            
-        if (!numEvents) numEvents = 20;
-        
-        getEvents()
-            .then(events => { 
-                let updatedEvents;
-                if (location === 'all') 
-                    updatedEvents = events;
-                else 
-                    updatedEvents = events.filter(event => 
-                        event.location === location
-                    );
-                  
-                this.setState({
-                    events: updatedEvents.slice(
-                        0, numEvents),
-                    maxNumEvents: updatedEvents.length    
-                });
-            });
+
+            numEvents = this.state.currentNumEvents;
+            events = await getEvents();
+        } else if (!location) {
+            location = this.state.currentLocation;
+            this.setState({currentNumEvents: numEvents});
+            events = this.state.events;
+        }
+
+        let updatedEvents;
+        if (location === 'all') 
+            updatedEvents = events;
+        else 
+            updatedEvents = events.filter(event => 
+                event.location === location
+            );
+			
+        this.setState({
+            events: updatedEvents.slice(
+                0, numEvents),
+            maxNumEvents: updatedEvents.length    
+        });
+
     }
 
     render() {
         const {
-            currentLocation,
             events, 
-            filteredCity,
             filteredEvents,
             locations, 
             selectedChart,
-            showWelcomeScreen,
+            // showWelcomeScreen,
             showUserInput
         } = this.state;
-        const {
-            filterAllCitiesEvents, 
+        const { 
             getCitiesData, 
             updateEvents
         } = this;
-        if (showWelcomeScreen === undefined) return <div className="App" />;
+        // if (showWelcomeScreen === undefined) return <div className="App" />;
         
         return (
             <div className="App">
@@ -177,33 +162,6 @@ class App extends Component {
                                 maxNumEvents={this.state.maxNumEvents} 
                                 updateEvents={updateEvents} 
                             />
-                            {currentLocation === 'all' 
-                                ? <>
-                                    <p className="label">
-										Filter events by city:
-                                    </p>
-                                    <ul className="all-cities-list">
-                                        {locations.map((location, i) => {
-                                            
-                                            return <li 
-                                                key={i}
-                                                className={
-                                                    filteredCity 
-                                                        === location 
-                                                        ? 'selected'
-                                                        : ''
-                                                }
-                                                onClick={() => 
-                                                    filterAllCitiesEvents(
-                                                        location)
-                                                }
-                                            >{location}</li>;
-                                            
-                                        })}
-                                    </ul>
-                                </>
-                                : null 
-                            }
                             <p className="label">View events chart by:</p>
                             <label htmlFor="events-by-genre">Genre</label>
                             <input 
@@ -296,9 +254,9 @@ class App extends Component {
                         }
                     </div>
                 </div>
-                <WelcomeScreen 
+                {/* <WelcomeScreen 
                     showWelcomeScreen={this.state.showWelcomeScreen}
-                    getAccessToken={() => {getAccessToken();}} />
+                    getAccessToken={() => {getAccessToken();}} /> */}
                 
             </div>
         );
