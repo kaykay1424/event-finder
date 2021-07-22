@@ -21,19 +21,13 @@ class Event extends Component {
         const {event} = this.props;
         const {showDetails} = this.state;
         const eventStartDate = new Date(event.start.dateTime);
-        const eventStartHours = eventStartDate.getHours();
-        // eslint-disable-next-line no-console
-        console.log(new Date(event.start.dateTime));
-        // eslint-disable-next-line no-console
-        console.log(new Date(event.start.dateTime).getHours());
+        const eventStartHours = eventStartDate.getHours();        
         const eventStartMinutes = eventStartDate.getMinutes();
         // eslint-disable-next-line no-unused-vars
         const eventStartTime = `${eventStartHours}:${
             eventStartMinutes === 0 ? '00' : eventStartMinutes}`;
         const eventEndDate = new Date(event.end.dateTime);
         const eventEndHours = eventEndDate.getHours();
-        // eslint-disable-next-line no-console
-        // console.log('end ' + eventEndHours);
         const eventEndMinutes = eventEndDate.getMinutes();
         // eslint-disable-next-line no-unused-vars
         const eventEndTime = `${eventEndHours}:${

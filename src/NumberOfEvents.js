@@ -1,53 +1,54 @@
-import React, {Component} from 'react';
+import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import './NumberOfEvents.css';
 
-class NumberOfEvents extends Component {
-    state = {
-        infoText: '',
-        numEvents: 20
-    }
+import {ErrorAlert} from './Alert';
 
-    handleInputChange = (value) => {
-        if (value < 0 || value > 50) {
-            this.setState({
-                infoText: 'Please enter a number between 0 and 50.',
-                numEvents: value
-            });
+const NumberOfEvents = ({maxNumEvents, updateEvents}) => {
+    const [infoText, setInfoText] = useState('');
+    const [numEvents, setNumEvents] = useState(20);
+        
+    useEffect(() => {
+        setNumEvents(maxNumEvents);
+    },[maxNumEvents]);
+
+    const handleInputChange = (value) => {
+        if (value < 1 || value > maxNumEvents) {
+            setInfoText(`Please enter a number between 1 and ${maxNumEvents}.`);
+            setNumEvents(value);
+            
+            return;
         } else {
-            this.setState({
-                infoText: '',
-                numEvents: value
-            });
+            setInfoText('');
+            setNumEvents(value);
         }
         
         
 
-        this.props.updateEvents(null, value);
-    }
+        updateEvents(null, value);
+    };
 
-    render() {
-        return (
-            <div className="Number-Of-Events">
-                <label 
-                    className="label" 
-                    htmlFor="number">Select number of events</label>
-                <input 
-                    id="number"
-                    className="number"
-                    type="number"
-                    value={this.props.maxNumEvents < this.state.numEvents 
-                        ? this.props.maxNumEvents
-                        : this.state.numEvents 
-                    }
-                    max={this.props.maxNumEvents}
-                    min="1"
-                    onChange={(e) => this.handleInputChange(e.target.value)}
-                />
-            </div>
-        );
-    }
-}
+    return (
+        <div className="Number-Of-Events">
+            <label 
+                className="label" 
+                htmlFor="number">Select number of events</label>
+            <input 
+                id="number"
+                className="number"
+                type="number"
+                value={numEvents}
+                max={maxNumEvents}
+                min="1"
+                onChange={(e) => handleInputChange(e.target.value)}
+            />
+            <ErrorAlert 
+                text={infoText} 
+            />
+        </div>
+        
+    );
+};
 
 NumberOfEvents.propTypes = {
     maxNumEvents: PropTypes.number,

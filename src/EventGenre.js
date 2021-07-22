@@ -58,7 +58,15 @@ const EventGenre = ({events}) => {
         <div className="chart-container">
             <h3 className="text-center">Events by genre</h3>
             <ResponsiveContainer width="100%" height={400}>
-                <PieChart height={400}>
+                <PieChart 
+                    height={400}
+                    margin={{
+                        top: 0, 
+                        right: 60, 
+                        bottom: 0, 
+                        left: -60,
+                    }}
+                >
                     <Legend verticalAlign="top" height={30} />
                     <Pie
                         data={data}
@@ -68,7 +76,6 @@ const EventGenre = ({events}) => {
                         label={({percent}) => {
                             return `${(percent * 100).toFixed(0)}%`;}}
                         outerRadius={120}
-                        fill="#8884d8"
                         dataKey="value"
                     >
                         <LabelList 

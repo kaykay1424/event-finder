@@ -1,22 +1,8 @@
 import React, {Component} from 'react';
-import './App.css';
-import './nprogress.css';
-import CitySearch from './CitySearch';
-import EventList from './EventList';
-import NumberOfEvents from './NumberOfEvents';
-import EventGenre from './EventGenre';
-// import WelcomeScreen from './WelcomeScreen';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {
     faSearch
 } from '@fortawesome/free-solid-svg-icons';
-
-import {
-    // checkToken, 
-    extractLocations, 
-    // getAccessToken, 
-    getEvents
-} from './api';
 
 import {
     ResponsiveContainer, 
@@ -28,14 +14,34 @@ import {
     Tooltip
 } from 'recharts';
 
+import './App.css';
+import './nprogress.css';
+
+import {
+    checkToken, 
+    extractLocations, 
+    getAccessToken, 
+    getEvents
+} from './api';
+
+/************ Components ***********/
+import CitySearch from './CitySearch';
+import EventList from './EventList';
+import NumberOfEvents from './NumberOfEvents';
+import EventGenre from './EventGenre';
+import WelcomeScreen from './WelcomeScreen';
+
+
 class App extends Component {
     state = {
+        allEvents: [],
         currentLocation: 'all',
         currentNumEvents: 20,
         events: [],
         filteredCity: '',
         filteredEvents: [],
         locations: [],
+        maxNumEvents: 20,
         selectedChart: 'city',
         showWelcomeScreen: undefined,
         showUserInput: true
@@ -43,23 +49,25 @@ class App extends Component {
 
     async componentDidMount() {
         this.mounted = true;
-        // const accessToken = localStorage.getItem('access_token');
-        // const isTokenValid = (await checkToken(accessToken)).error 
-        //     ? false : true;
-        // const searchParams = new URLSearchParams(window.location.search);
-        // const code = searchParams.get('code');
-        // this.setState({showWelcomeScreen: !(code || isTokenValid)});
-        // if ((code || isTokenValid) && this.mounted) {
-        getEvents().then((events) => {
-            if (this.mounted) {
-                this.setState({
-                    events, 
-                    locations: extractLocations(events),
-                    maxNumEvents: events.length 
-                });
-            }
-        });
-        // }       
+        const accessToken = localStorage.getItem('access_token');
+        const isTokenValid = (await checkToken(accessToken)).error 
+            ? false : true;
+        const searchParams = new URLSearchParams(window.location.search);
+        const code = searchParams.get('code');
+        this.setState({showWelcomeScreen: !(code || isTokenValid)});
+        if ((code || isTokenValid) && this.mounted) {
+            getEvents().then((events) => {
+                if (this.mounted) {
+                    this.setState({
+                        currentNumEvents: events.length,
+                        allEvents: events,
+                        events, 
+                        locations: extractLocations(events),
+                        maxNumEvents: events.length 
+                    });
+                }
+            });
+        }       
     }
 
     componentWillUnmount() {
@@ -96,30 +104,30 @@ class App extends Component {
         if (location) {
             this.setState({
                 currentLocation: location,
-                filteredCity: '',
-                filteredEvents: []
             });
 
             numEvents = this.state.currentNumEvents;
             events = await getEvents();
+            this.setState({allEvents: events});
         } else if (!location) {
             location = this.state.currentLocation;
             this.setState({currentNumEvents: numEvents});
-            events = this.state.events;
+            events = this.state.allEvents;
         }
 
         let updatedEvents;
-        if (location === 'all') 
+        if (location === 'all' || !location) {
             updatedEvents = events;
+        }
         else 
-            updatedEvents = events.filter(event => 
+            updatedEvents = this.state.allEvents.filter(event => 
                 event.location === location
             );
 			
         this.setState({
             events: updatedEvents.slice(
                 0, numEvents),
-            maxNumEvents: updatedEvents.length    
+            maxNumEvents: this.state.allEvents.length    
         });
 
     }
@@ -130,14 +138,14 @@ class App extends Component {
             filteredEvents,
             locations, 
             selectedChart,
-            // showWelcomeScreen,
+            showWelcomeScreen,
             showUserInput
         } = this.state;
         const { 
             getCitiesData, 
             updateEvents
         } = this;
-        // if (showWelcomeScreen === undefined) return <div className="App" />;
+        if (showWelcomeScreen === undefined) return <div className="App" />;
         
         return (
             <div className="App">
@@ -227,9 +235,9 @@ class App extends Component {
                                     <ScatterChart
                                         margin={{
                                             top: 20, 
-                                            right: 20, 
+                                            right: 10, 
                                             bottom: 20, 
-                                            left: 20,
+                                            left: -50,
                                         }}
                                     >
                                         <CartesianGrid />
@@ -246,7 +254,7 @@ class App extends Component {
                                         />
                                         <Scatter 
                                             data={getCitiesData()} 
-                                            fill="#8884d8" 
+                                            fill="#3c92e8" 
                                         />
                                     </ScatterChart>
                                 </ResponsiveContainer>
@@ -254,9 +262,9 @@ class App extends Component {
                         }
                     </div>
                 </div>
-                {/* <WelcomeScreen 
+                <WelcomeScreen 
                     showWelcomeScreen={this.state.showWelcomeScreen}
-                    getAccessToken={() => {getAccessToken();}} /> */}
+                    getAccessToken={() => {getAccessToken();}} />
                 
             </div>
         );

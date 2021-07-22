@@ -1,11 +1,8 @@
 .Event-List {
-    /* display: flex; */
     padding-left: 0;
     width: 100%;
 }
 .event-list-container {
-    /* display: flex; */
-    /* height: 100vh; */
     overflow-y: auto;
     padding-left: 0;
     width: 45%;
