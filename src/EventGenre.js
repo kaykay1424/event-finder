@@ -29,6 +29,8 @@ const EventGenre = ({events}) => {
             {name: 'Angular', value: 0},
             {name: 'Node', value: 0}
         ];
+
+        let sum = 0;
         
         // Get number of events for each genre
         events.forEach(({summary}) => {
@@ -41,6 +43,7 @@ const EventGenre = ({events}) => {
             
                 if (matches) {
                     data[i].value = value + matches.length;
+                    sum += matches.length;
                 }
             }
         });
@@ -48,6 +51,12 @@ const EventGenre = ({events}) => {
         // Remove genres that have 0 events
         data = data.filter((object) => {
             return object.value === 0 ? false : true;
+        });
+
+        // Add percentage property to each object
+        data.map((object) => {
+            const percentage = (object.value / sum) * 100 + '%';
+            object['percentage'] = percentage;
         });
 
         return data;
@@ -60,26 +69,16 @@ const EventGenre = ({events}) => {
             <ResponsiveContainer width="100%" height={400}>
                 <PieChart 
                     height={400}
-                    margin={{
-                        top: 0, 
-                        right: 60, 
-                        bottom: 0, 
-                        left: -60,
-                    }}
                 >
                     <Legend verticalAlign="top" height={30} />
                     <Pie
                         data={data}
-                        cx={200}
-                        cy={200}
                         labelLine={false}
-                        label={({percent}) => {
-                            return `${(percent * 100).toFixed(0)}%`;}}
-                        outerRadius={120}
+                        outerRadius='90%'
                         dataKey="value"
                     >
                         <LabelList 
-                            dataKey="name" 
+                            dataKey="percentage" 
                             position="inside"
                         />
                         {data.map((entry, index) => (

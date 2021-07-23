@@ -145,6 +145,7 @@ class App extends Component {
             getCitiesData, 
             updateEvents
         } = this;
+
         if (showWelcomeScreen === undefined) return <div className="App" />;
         
         return (
@@ -233,11 +234,8 @@ class App extends Component {
                                 <ResponsiveContainer width="100%" height={400}>
                         
                                     <ScatterChart
-                                        margin={{
-                                            top: 20, 
-                                            right: 10, 
-                                            bottom: 20, 
-                                            left: -50,
+                                        margin={{ 
+                                            left: -40,
                                         }}
                                     >
                                         <CartesianGrid />

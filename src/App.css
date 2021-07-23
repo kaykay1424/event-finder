@@ -44,6 +44,9 @@ ul {
     padding: 0.5rem;
     width: 150px;
 }
+.chart-container .recharts-legend-wrapper {
+    left: 0 !important;
+}
 .hide {
     display: none;
 }
@@ -73,7 +76,7 @@ ul {
     display: flex;
     justify-content: space-between;
     height: 100vh;
-    padding-top: 1rem;
+    padding: 1rem;
     width: 100%;
 }
 .data-vis-wrapper {
