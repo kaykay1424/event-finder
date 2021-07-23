@@ -6,7 +6,7 @@ import {ErrorAlert} from './Alert';
 
 const NumberOfEvents = ({maxNumEvents, updateEvents}) => {
     const [infoText, setInfoText] = useState('');
-    const [numEvents, setNumEvents] = useState(20);
+    const [numEvents, setNumEvents] = useState('');
         
     useEffect(() => {
         setNumEvents(maxNumEvents);

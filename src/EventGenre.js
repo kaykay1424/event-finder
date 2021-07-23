@@ -55,8 +55,8 @@ const EventGenre = ({events}) => {
 
         // Add percentage property to each object
         data.map((object) => {
-            const percentage = (object.value / sum) * 100 + '%';
-            object['percentage'] = percentage;
+            const percentage = (object.value / sum) * 100;
+            object['percentage'] = parseInt(percentage) + '%';
         });
 
         return data;
