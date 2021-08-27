@@ -8,6 +8,7 @@ If you want to use the app monitoring tool Atatus, you will need to [create an a
 
 ## How to Get Started
 1. Clone the repo or download the zip file
+1. Navigate to project folder
 1. Run `npm install` to install the necessary dependencies
 1. Add config.json file to root of auth-server folder with the following code filling in the client_id, project_id and client_secret values from your OAuth Consumer.
 `{
@@ -16,7 +17,7 @@ If you want to use the app monitoring tool Atatus, you will need to [create an a
     "CLIENT_SECRET": "client_secret",
     "CALENDAR_ID": "fullstackwebdev@careerfoundry.com"
 }`
-1. Add Atatus key to atatus config on line 7 in index.js file in root of app folder. If you don't want to use Atatus, comment out the atatus lines (6, 7).
+1. Add Atatus key to atatus config on line 7 in index.js file in root of project folder. If you don't want to use Atatus, comment out the atatus lines (6, 7).
 1. Run `npm start` to start the local server and view the app
 
 ## List of Technologies
