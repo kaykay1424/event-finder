@@ -18,7 +18,7 @@ const EventGenre = ({events}) => {
     }, [events]);
 
     const [data, setData] = useState([]);
-
+    
     const colors = ['#6A8CFA', '#68B54C', '#FA3824', '#ED892B', '#8B69FA'];
 
     const getGenresData = () => {
@@ -41,6 +41,7 @@ const EventGenre = ({events}) => {
                 const regex = new RegExp(genre.toLowerCase(), 'g');
                 const matches = summary.match(regex);
             
+                
                 if (matches) {
                     data[i].value = value + matches.length;
                     sum += matches.length;
@@ -49,14 +50,12 @@ const EventGenre = ({events}) => {
         });
    
         // Remove genres that have 0 events
-        data = data.filter((object) => {
-            return object.value === 0 ? false : true;
-        });
+        data = data.filter((object) => object.value !== 0);
 
         // Add percentage property to each object
-        data.map((object) => {
+        data.forEach((object) => {
             const percentage = (object.value / sum) * 100;
-            object['percentage'] = parseInt(percentage) + '%';
+            object['percentage'] = percentage.toFixed() + '%';
         });
 
         return data;

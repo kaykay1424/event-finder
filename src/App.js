@@ -31,15 +31,12 @@ import NumberOfEvents from './NumberOfEvents';
 import EventGenre from './EventGenre';
 import WelcomeScreen from './WelcomeScreen';
 
-
 class App extends Component {
     state = {
         allEvents: [],
         currentLocation: 'all',
         currentNumEvents: 20,
         events: [],
-        filteredCity: '',
-        filteredEvents: [],
         locations: [],
         maxNumEvents: 20,
         selectedChart: 'city',
@@ -50,8 +47,7 @@ class App extends Component {
     async componentDidMount() {
         this.mounted = true;
         const accessToken = localStorage.getItem('access_token');
-        const isTokenValid = (await checkToken(accessToken)).error 
-            ? false : true;
+        const isTokenValid = !!((await checkToken(accessToken)).error); 
         const searchParams = new URLSearchParams(window.location.search);
         const code = searchParams.get('code');
         this.setState({showWelcomeScreen: !(code || isTokenValid)});
@@ -59,11 +55,11 @@ class App extends Component {
             getEvents().then((events) => {
                 if (this.mounted) {
                     this.setState({
-                        currentNumEvents: events.length,
                         allEvents: events,
+                        currentNumEvents: events.length,
                         events, 
                         locations: extractLocations(events),
-                        maxNumEvents: events.length 
+                        maxNumEvents: events.length
                     });
                 }
             });
@@ -77,9 +73,7 @@ class App extends Component {
     getCitiesData = () => {      
         const data = [];
         const cities = {};
-        const events = this.state.filteredEvents.length > 0 
-            ? this.state.filteredEvents
-            : this.state.events;
+        const events = this.state.events;
         // Get number of events for each city
         events.forEach(({location}) => {
             let numEvents = 0;
@@ -100,42 +94,52 @@ class App extends Component {
     }
 
     updateEvents = async (location, numEvents) => { 
-        let events;
-        if (location) {
-            this.setState({
-                currentLocation: location,
-            });
+        let currentNumEvents = numEvents ? numEvents : this.state.currentNumEvents;
+        
+        /* If a location has been chosen
+            make request to get events from that location.
+            Otherwise, If the number of events has changed
+            use the stored state of all events,
+            since the events don't need to be changed,
+            just the number of them being displayed
+        */
+        let events = location 
+            ?   
+                location === 'all'
+                    ? await getEvents()
+                    : (await getEvents()).filter((event) => event.location === location )
+            : this.state.allEvents
+  
+        /* Only need to change allEvents when location is changed 
+            (when there is a new list of events, not just a different number of events)
+        */
+        if (location) this.setState({allEvents: events});
 
-            numEvents = this.state.currentNumEvents;
-            events = await getEvents();
-            this.setState({allEvents: events});
-        } else if (!location) {
-            location = this.state.currentLocation;
-            this.setState({currentNumEvents: numEvents});
-            events = this.state.allEvents;
-        }
-
-        let updatedEvents;
-        if (location === 'all' || !location) {
-            updatedEvents = events;
-        }
-        else 
-            updatedEvents = this.state.allEvents.filter(event => 
-                event.location === location
-            );
-			
+        /* Change the number of events in the input
+            and the state of the max number of events
+            to the number of events being displayed
+            if either number is greater than the number of
+            events displayed, since they cannot select a 
+            number higher than the number of events available
+        */
         this.setState({
-            events: updatedEvents.slice(
-                0, numEvents),
-            maxNumEvents: this.state.allEvents.length    
-        });
+            currentNumEvents: currentNumEvents > events.length
+                ? events.length
+                : currentNumEvents
+            ,
+            maxNumEvents: events.length
+        })
 
+        /* Display the number of events specified by the user or the max
+            number of events available
+        */
+        events = events.slice(0, currentNumEvents);
+        this.setState({events});                
     }
 
     render() {
         const {
             events, 
-            filteredEvents,
             locations, 
             selectedChart,
             showWelcomeScreen,
@@ -161,13 +165,14 @@ class App extends Component {
                                         showUserInput: !showUserInput
                                     })}
                             >
-								&times;
+                                &times;
                             </span>
                             <CitySearch 
                                 locations={locations} 
                                 updateEvents={updateEvents} 
                             />
                             <NumberOfEvents 
+                                currentNumEvents={this.state.currentNumEvents}
                                 maxNumEvents={this.state.maxNumEvents} 
                                 updateEvents={updateEvents} 
                             />
@@ -178,9 +183,7 @@ class App extends Component {
                                 type="radio" 
                                 name="chart"
                                 value="Genre" 
-                                checked={selectedChart === 'genre' ?
-                                    true: false
-                                }
+                                checked={selectedChart === 'genre'}
                                 onChange={() => this.setState({
                                     selectedChart: 'genre'
                                 })}
@@ -189,16 +192,14 @@ class App extends Component {
                             <label 
                                 htmlFor="events-by-city"
                             >
-								City
+                                City
                             </label>
                             <input 
                                 id="events-by-city" 
                                 type="radio" 
                                 name="chart"
                                 value="City"
-                                checked={selectedChart === 'city' ?
-                                    true: false
-                                } 
+                                checked={selectedChart === 'city'} 
                                 onChange={() => this.setState({
                                     selectedChart: 'city'
                                 })}
@@ -215,19 +216,14 @@ class App extends Component {
                             ><FontAwesomeIcon icon={faSearch} /> </span>
                         </div>}
                 </div>
-                
-
-				
+ 
                 <div className="content">
                     <EventList 
-                        events={filteredEvents.length > 0 
-                            ? filteredEvents : events} 
+                        events={events} 
                     />
                     <div className="data-vis-wrapper">
-                    
                         {selectedChart === 'genre' 
-                            ? <EventGenre events={filteredEvents.length > 0 
-                                ? filteredEvents : events} />
+                            ? <EventGenre events={events} />
                             :
                             <div className="chart-container">
                                 <h3 className="text-center">Events by city</h3>
@@ -235,7 +231,8 @@ class App extends Component {
                         
                                     <ScatterChart
                                         margin={{ 
-                                            left: -40,
+                                            left: -30,
+                                            top: 5
                                         }}
                                     >
                                         <CartesianGrid />

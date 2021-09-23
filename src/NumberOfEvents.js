@@ -4,19 +4,21 @@ import './NumberOfEvents.css';
 
 import {ErrorAlert} from './Alert';
 
-const NumberOfEvents = ({maxNumEvents, updateEvents}) => {
+const NumberOfEvents = ({currentNumEvents, maxNumEvents, updateEvents}) => {
     const [infoText, setInfoText] = useState('');
     const [numEvents, setNumEvents] = useState('');
+    const [maximumNumEvents, setMaximumNumEvents] = useState('');
         
     useEffect(() => {
-        setNumEvents(maxNumEvents);
-    },[maxNumEvents]);
+        setNumEvents(currentNumEvents);
+        setMaximumNumEvents(maxNumEvents);
+    },[currentNumEvents, maxNumEvents]);
 
     const handleInputChange = (value) => {
-        if (value < 1 || value > maxNumEvents) {
+        
+        if (value < 1 || value > maximumNumEvents) {
             setInfoText(`Please enter a number between 1 and ${maxNumEvents}.`);
             setNumEvents(value);
-            
             return;
         } else {
             setInfoText('');
@@ -38,7 +40,7 @@ const NumberOfEvents = ({maxNumEvents, updateEvents}) => {
                 className="number"
                 type="number"
                 value={numEvents}
-                max={maxNumEvents}
+                max={maximumNumEvents}
                 min="1"
                 onChange={(e) => handleInputChange(e.target.value)}
             />

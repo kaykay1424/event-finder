@@ -21,8 +21,8 @@ const EventList = ({events}) => {
             <div className="event-list-container">
                 
                 <ul className="Event-List">
-                    {events.map(event =>
-                        <li key={event.id}>
+                    {events.map((event, i) =>
+                        <li key={i}>
                             <Event event={event} />
                         </li>
                     )}
